@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+    <h1>응급실 실시간 가용병상 현황(ajax 사용 구현)</h1>
+    <button type="button">버튼</button>
+    <div class="covid_dashboard">
+        <table class="covid_table">
+            <thead class="covid_dashboard_head">
+                <th class="">병원</th>
+                <th class="">고유 ID</th>
+                <th class="">가용병상</th>
+                <th class="">총 병상</th>
+                <th class="">위도</th>
+                <th class="">경도</th>
+            </thead>
+            <tbody class="covid_dashboard_data">
+            </tbody>
+        </table>
+    </div>
+<script>
+    var hpid = "";
+    $(document).ready(function(){
+        $.ajax({
+            url:'https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&STAGE1=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&numOfRows=100', //통신을 원하는 URL 주소
+            type: 'GET',
+            dataType: 'xml', //서버로부터 받을 데이터 타입 입력
+            success: function(response){
+                xmlPasing(response); //내가 만들 parsing
+            },
+            error: function(xhr, status, msg){
+                console.log('상태값 : ' + status+' Http에러메세지' + msg);
+            },
+        });
+
+        $.ajax({
+            url:'https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEgytBassInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&HPID=A1100015', //통신을 원하는 URL 주소
+            type: 'GET',
+            dataType: 'xml', //서버로부터 받을 데이터 타입 입력
+            success: function(response){
+                xmlPasing(response); //내가 만들 parsing
+            },
+            error: function(xhr, status, msg){
+                console.log('상태값 : ' + status+' Http에러메세지' + msg);
+            },
+        });
+
+        function xmlPasing(data, data2){
+            var infoList = ``;
+            hpid = $(data).find('hpid').text();
+            $(data).find('item').each(function(indext, stuff){
+                //hvec값이 0보다 작으면 0으로 표현
+                if ($(this).find('hvec').text() < 0){
+                    $(this).find('hvec').text(0);
+                }
+
+                infoList += `<tr>
+                                <td>${$(this).find('dutyName').text()}</td>
+                                <td>${$(this).find('hpid').text()}</td>
+                                <td>${$(this).find('hvec').text()}</td>
+                                <td>${$(this).find('hvs01').text()}</td>
+                `;
+                
+            });
+
+            $(data2).find('item').each(function(indext, stuff){
+
+                infoList += `
+                                <td>${$(this).find('wgs84Lat').text()}</td>
+                                <td>${$(this).find('wgs84Lon').text()}</td>
+                            </tr>
+                `;
+                
+            });
+
+            $('.covid_dashboard_data').empty().append(infoList);    
+        }
+    });
+    
+
+</script>
+</body>
+</html>

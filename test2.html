@@ -1,56 +1,23 @@
 <html>
 <head>
-<title>전국 캠핑장 현황</title>
+<title>test</title>
 </head>
 <body>
-  <h1>전국 캠핑장 현황</h1>
-
-  <!-- 지도를 표시할 div 입니다 -->
-  <div id="map" style="width:100%;height:700px;"></div>
-<!--  플랫폼 값 https://localhost:8080 -->
-   <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e3b280d2b743d5969774693f4f482db7&libraries=clusterer"></script>
-  <script>
-  // CORS 이슈를 우회하기 위한 프록시 서버 URL (실제 환경에서는 백엔드에서 처리해야 함)
-const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
-
-const BASE_URL = 'https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire';
-const SERVICE_KEY = '6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA==';
-
-async function fetchEmergencyRoomInfo() {
-    try {
-        const stage1 = encodeURIComponent('서울특별시');
-        const url = `${PROXY_URL}${BASE_URL}?serviceKey=${SERVICE_KEY}&STAGE1=${stage1}&_type=json`;
-
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    <script>
+    var xhr = new XMLHttpRequest();
+    var url = 'http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire'; /*URL*/
+    var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D'; /*Service Key*/
+    queryParams += '&' + encodeURIComponent('STAGE1') + '=' + encodeURIComponent('서울특별시'); /**/
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('50'); /**/
+    xhr.open('GET', url + queryParams);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            console.log('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
         }
+    };
 
-        const data = await response.json();
-        const items = data.response.body.items.item;
+    xhr.send('');
 
-        // 응급실 정보 출력
-        items.forEach(item => {
-            console.log('병원명:', item.dutyName);
-            console.log('주소:', item.dutyAddr);
-            console.log('응급실 가용병상수:', item.hvec);
-            console.log('------------------------');
-        });
-
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-// 함수 실행
-fetchEmergencyRoomInfo();
-  </script>
+    </script>
 </body>
 </html>

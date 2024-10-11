@@ -15,79 +15,79 @@
 </style>
 </head>
 <body>
-  <!-- 지도를 표시할 div 입니다 -->
-  <div id="map" style="width:100%;height:700px;"></div>
-<!--  플랫폼 값 https://localhost:8080 -->
-   <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e3b280d2b743d5969774693f4f482db7&libraries=clusterer"></script>
-  <script>
+    <!-- 지도를 표시할 div 입니다 -->
+    <div id="map" style="width:100%;height:700px;"></div>
+    <!--  플랫폼 값 https://localhost:8080 -->
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e3b280d2b743d5969774693f4f482db7&libraries=clusterer"></script>
+    <script>
 
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-        mapOption = { 
-            center: new kakao.maps.LatLng(37.5366059, 126.9771397), // 지도의 중심좌표 - 그린컴퓨터
-            level: 7 // 지도의 확대 레벨
-        };
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng(37.5366059, 126.9771397), // 지도의 중심좌표 - 그린컴퓨터
+                level: 7 // 지도의 확대 레벨
+            };
 
-    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-    var map = new kakao.maps.Map(mapContainer, mapOption); 
+        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-    // 병원정보 API (시민건강국 보건의료정책과 제공)
-    const url = 'http://openapi.seoul.go.kr:8088/6c726346796162673738594676554d/json/TvEmgcHospitalInfo/1/70';
-    // 병원 실시간 병상 정보 API
-    const url2 = 'https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&STAGE1=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C';
-    
-    fetch(url)
-    .then(result => result.json())   // json 파일을 객체로 변환
-    .then(json => {                     
-        //console.log(json);              
-        const data = json.TvEmgcHospitalInfo.row;  // 객체에서 실제 내용만 data로 저장   
-        console.log(data);
-    // 마커들을 모아놓을 변수
-    var markers = [];
+        // 병원정보 API (시민건강국 보건의료정책과 제공)
+        const url = 'http://openapi.seoul.go.kr:8088/6c726346796162673738594676554d/json/TvEmgcHospitalInfo/1/70';
+        // 병원 실시간 병상 정보 API
+        const url2 = 'https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&STAGE1=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C';
+        
+        fetch(url)
+        .then(result => result.json())   // json 파일을 객체로 변환
+        .then(json => {                     
+            //console.log(json);              
+            const data = json.TvEmgcHospitalInfo.row;  // 객체에서 실제 내용만 data로 저장   
+            console.log(data);
+        // 마커들을 모아놓을 변수
+        var markers = [];
 
-    for(let i = 0; i < data.length; i++) {
-        // 마커를 생성합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: new kakao.maps.LatLng(data[i].WGS84LAT, data[i].WGS84LON)
-        });
+        for(let i = 0; i < data.length; i++) {
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(data[i].WGS84LAT, data[i].WGS84LON)
+            });
 
-        markers.push(marker);   // 마커를 배열에 추가합니다
-
-
+            markers.push(marker);   // 마커를 배열에 추가합니다
 
 
-        //인포 윈도우 표시하기
-        var infowindow = new kakao.maps.InfoWindow( {
-            content : data[i].DUTYNAME + "<br>" + data[i].DUTYADDR + "<br>" + data[i].DUTYTEL3 + "<br>13/15"   
-            // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        });
 
-        // 마커에 이벤트를 등록합니다
-        // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-        // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
 
-        // 마커에 마우스오버하면 makeOverListener() 실행
-        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));  
-        // 마커에서 마우스아웃하면 makeOutListener() 실행
-        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));   
-    }
+            //인포 윈도우 표시하기
+            var infowindow = new kakao.maps.InfoWindow( {
+                content : data[i].DUTYNAME + "<br>" + data[i].DUTYADDR + "<br>" + data[i].DUTYTEL3 + "<br>13/15"   
+                // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            });
 
-    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-    function makeOverListener(map, marker, infowindow) {
-        return function() {
-            infowindow.open(map, marker);          
-        };
-    }
+            // 마커에 이벤트를 등록합니다
+            // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+            // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
 
-    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-    function makeOutListener(infowindow) {
-        return function() {
-            infowindow.close();
-        };
-    
+            // 마커에 마우스오버하면 makeOverListener() 실행
+            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));  
+            // 마커에서 마우스아웃하면 makeOutListener() 실행
+            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));   
+        }
 
-    }
-  });  // fetch 끝
-  </script>
+        // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+        function makeOverListener(map, marker, infowindow) {
+            return function() {
+                infowindow.open(map, marker);          
+            };
+        }
+
+        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+        function makeOutListener(infowindow) {
+            return function() {
+                infowindow.close();
+            };
+        
+
+        }
+    });  // fetch 끝
+    </script>
 </body>
 </html>
