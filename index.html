@@ -45,16 +45,47 @@
             return null; // 에러 발생 시 null 반환
         }
     }
+   
+    const getLanLonUrl = "https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEgytBassInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&HPID=";
 
-    // 사용 예시
-    const url = "https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEgytBassInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&HPID=A1100015";
-    getLatLon(url).then(coordinates => {
-        console.log(coordinates); // [{ lat: "...", lon: "..." }, ...]
-        //coordinates의 lat 값 출력
-        console.log(coordinates[0].lat); // lat 출력하는법
-        console.log(coordinates[0].lon); // lon 출력하는법
-    });
+    // // 사용 예시
+    
+    // getLatLon(getLanLonUrl).then(coordinates => {
+    //     // console.log(coordinates); // [{ lat: "...", lon: "..." }, ...]
+    //     //coordinates의 lat 값 출력
+    //     // console.log(coordinates[0].lat); // lat 출력하는법
+    //     // console.log(coordinates[0].lon); // lon 출력하는법
+    // });
 
+
+
+
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = { 
+            center: new kakao.maps.LatLng(37.5366059, 126.9771397), // 지도의 중심좌표
+            level: 8 // 지도의 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+    
+
+    // 마커들을 모아놓을 변수
+    var markers = [];
+    
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+    function makeOverListener(map, marker, infowindow) {
+        return function() {
+            infowindow.open(map, marker);
+        };
+    }
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+    function makeOutListener(infowindow) {
+        return function() {
+            infowindow.close();
+        };
+    };
 
     (async () => {
         let responseEmer = await fetch("https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&STAGE1=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&numOfRows=100");
@@ -71,7 +102,19 @@
             let totalBed = value.querySelector("hvs01").textContent;
             let tel = value.querySelector("dutyTel3").textContent;
             let updateTime = value.querySelector("hvidate").textContent;
-
+            getLatLon(getLanLonUrl+hpid).then((data) => {
+                //마커 생성
+                var marker = new kakao.maps.Marker({
+                    map: map, //마커를 생성할 지도
+                    position: new kakao.maps.LatLng(data[0].lat, data[0].lon) //마커 위치
+                });
+                    // 마커에 표시할 인포윈도우를 생성합니다 
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: "<br>" + name + "<br>" + tel + "<br>" + usableBed + "/" + totalBed + " (가용병상 / 총병상)<br>" + "&nbsp" // 인포윈도우에 표시할 내용
+                });
+                kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+            });
 
             // console.log('============');
             // console.log(name);
@@ -81,61 +124,37 @@
             // console.log(tel);
             // console.log(updateTime);
         })
-        
+
     })();
 
-    //함수호출
-    
-    /************************************************************************************************
-     * 기본적으로 xml로 리턴되는 API들이니까
-     * 우선 실시간 병상 정보를 불러오고 https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&STAGE1=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&pageNo=1&numOfRows=100
-     * 병상 정보에서 hpid (병원 고유 번호)를 파라미터로 병원의 기본정보를 불러온다 https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEgytBassInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&HPID=A1100015&pageNo=1&numOfRows=10
-     * 기본정보의 위도 경도로 마커를 찍고 병원 이름, 병원 주소, 전화번호, 실시간 병상 정보를 기입한다.
-     * **********************************************************************************************
-    */
 
-
-
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-        mapOption = { 
-            center: new kakao.maps.LatLng(37.5366059, 126.9771397), // 지도의 중심좌표
-            level: 14 // 지도의 확대 레벨
-        };
-
-    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
-    
-
-    //     // 마커들을 모아놓을 변수
-    //     var markers = [];
-
-    //     for(let i = 0; i < data.length; i++) {  
+    // for(let i = 0; i < data.length; i++) {  
     //     // 마커를 생성합니다
     //     var marker = new kakao.maps.Marker({
     //         map: map,
     //         position: new kakao.maps.LatLng(data[i].WGS84LAT, data[i].WGS84LON)
     //     });
 
-    //         // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-    //         // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-    //         // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-    //         kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-    //         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-    //     }
+    //     // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+    //     // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+    //     // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+    //     kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+    //     kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+    // }
 
-    //     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-    //     function makeOverListener(map, marker, infowindow) {
-    //         return function() {
-    //             infowindow.open(map, marker);
-    //         };
-    //     }
+    // // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+    // function makeOverListener(map, marker, infowindow) {
+    //     return function() {
+    //         infowindow.open(map, marker);
+    //     };
+    // }
 
-    //     // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-    //     function makeOutListener(infowindow) {
-    //         return function() {
-    //             infowindow.close();
-    //         };
-    //     }
-    // });
+    // // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+    // function makeOutListener(infowindow) {
+    //     return function() {
+    //         infowindow.close();
+    //     };
+    // };
 
 
 
