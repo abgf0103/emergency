@@ -60,6 +60,19 @@ function makeOutListener(infowindow) {
     };
 };
 
+function makeToggleListener(map, marker, infowindow) {
+    let isOpen = false; // 인포윈도우가 열려 있는지 여부를 추적하는 변수
+
+    return function() {
+        if (isOpen) {
+            infowindow.close(); // 인포윈도우가 열려 있다면 닫기
+        } else {
+            infowindow.open(map, marker); // 인포윈도우가 닫혀 있다면 열기
+        }
+        isOpen = !isOpen; // 상태 토글
+    };
+}
+
 (async () => {
     let responseEmer = await fetch("https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&STAGE1=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&numOfRows=100");
     let t_xml_emer = await responseEmer.text(); // 텍스트 형태로 가져오고
@@ -69,12 +82,12 @@ function makeOutListener(infowindow) {
     let xmlDocEmer = parseXMLEmer.parseFromString(t_xml_emer, "text/xml");
     let emerObject = xmlDocEmer.querySelectorAll("items item");
     emerObject.forEach(value => {
-        let name = value.querySelector("dutyName").textContent;
-        let hpid = value.querySelector("hpid").textContent;
-        let usableBed = value.querySelector("hvec").textContent;
-        let totalBed = value.querySelector("hvs01").textContent;
-        let tel = value.querySelector("dutyTel3").textContent;
-        let updateTime = value.querySelector("hvidate").textContent;
+        let name = value.querySelector("dutyName").textContent; //병원 이름
+        let hpid = value.querySelector("hpid").textContent; //병원 고유 ID
+        let usableBed = value.querySelector("hvec").textContent; //가용병상
+        let totalBed = value.querySelector("hvs01").textContent; //보유병상
+        let tel = value.querySelector("dutyTel3").textContent; //전화번호
+        let updateTime = value.querySelector("hvidate").textContent; //업데이트 최신화 시간
         getLatLon(getLanLonUrl+hpid).then((data) => {
             //마커 생성
             var marker = new kakao.maps.Marker({
@@ -85,8 +98,14 @@ function makeOutListener(infowindow) {
             var infowindow = new kakao.maps.InfoWindow({
                 content: "<br>" + name + "<br>" + tel + "<br>" + usableBed + "/" + totalBed + " (가용병상 / 총병상)<br>" + "&nbsp" // 인포윈도우에 표시할 내용
             });
+            //마우스 오버 이벤트
             kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+            //마우스 아웃 이벤트 (오버 상태에서 마우스가 마커에 나갈때 발생하는 이벤트)
             kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+            //마우스 클릭 이벤트 (토글상태로 다시 클릭하면 인포 윈도우가 사라짐) 
+            kakao.maps.event.addListener(marker, 'click', makeToggleListener(map, marker, infowindow));
+            //모바일 상태 터치 이벤트 추후 구현
+            //kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
         });
 
         // console.log('============');

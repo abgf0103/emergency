@@ -1,14 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="kr">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>삐용삐용</title>
     <link rel="stylesheet" href="/style/style.css">
 </head>
 <body>
+
 <div id="map"></div>
+<button class="sticky-button" id="modalButton">입력하기</button>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <button id="closeButton" class="close-button">✖</button>
+        <h2>입력값 저장 및 수정하기</h2>
+        <input type="text" id="userInput" placeholder="값을 입력하세요">
+        <button id="saveButton">저장</button>
+        <button id="editButton" style="display: none;">수정</button>
+    </div>
+</div>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e3b280d2b743d5969774693f4f482db7"></script>
 <script src="/js/map.js"></script>
 <script src="/js/geolocation.js"></script>
+<script src="/js/modal.js"></script>
+
 </body>
 </html>
