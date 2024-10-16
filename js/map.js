@@ -46,13 +46,19 @@ var mapContainer = document.getElementById("map"), // 지도를 표시할 div
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
 
-var imageSrc = "img/greenMarker.png", // 마커이미지 주소
-  imageSize = new kakao.maps.Size(25, 38), // 마커이미지의 크기
-  imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션
+var redImageSrc = "img/redMarker.png", // 빨간 마커이미지 주소
+  imageSize = new kakao.maps.Size(25, 38), // 빨간 마커이미지의 크기
+  imageOption = { offset: new kakao.maps.Point(27, 69) }; // 빨간 마커이미지의 옵션
 
-// 마커의 이미지정보를 가지고 있는 마커이미지를 생성
-var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
+var greenImageSrc = "img/greenMarker.png", // 초록 마커이미지 주소
+  imageSize = new kakao.maps.Size(25, 38), // 초록 마커이미지의 크기
+  imageOption = { offset: new kakao.maps.Point(27, 69) }; // 초록 마커이미지의 옵션
+
+// 초록 마커의 이미지정보를 가지고 있는 초록 마커이미지를 생성
+var greenMarkerImage = new kakao.maps.MarkerImage(greenImageSrc, imageSize, imageOption);
+
+// 빨간 마커의 이미지정보를 가지고 있는 초록 마커이미지를 생성
+var redMarkerImage = new kakao.maps.MarkerImage(redImageSrc, imageSize, imageOption);
 
 // 마커들을 모아놓을 변수
 var markers = [];
@@ -102,12 +108,22 @@ function makeToggleListener(map, marker, infowindow) {
     let tel = value.querySelector("dutyTel3").textContent; //전화번호
     let updateTime = value.querySelector("hvidate").textContent; //업데이트 최신화 시간
     getLatLon(getLanLonUrl + hpid).then((data) => {
+
       //마커 생성
-      var marker = new kakao.maps.Marker({
-        map: map, //마커를 생성할 지도
-        position: new kakao.maps.LatLng(data[0].lat, data[0].lon), //마커 위치
-        image: markerImage, // 마커이미지 설정
-      });
+      if(usableBed > 0){
+        var marker = new kakao.maps.Marker({
+          map: map, //마커를 생성할 지도
+          position: new kakao.maps.LatLng(data[0].lat, data[0].lon), //마커 위치
+          image: greenMarkerImage, // 마커이미지 설정
+        });
+      } else{
+        var marker = new kakao.maps.Marker({
+          map: map, //마커를 생성할 지도
+          position: new kakao.maps.LatLng(data[0].lat, data[0].lon), //마커 위치
+          image: redMarkerImage, // 마커이미지 설정
+        });
+      }
+      
       // 마커가 지도 위에 표시되도록 설정합니다
       marker.setMap(map);
       // 마커에 표시할 인포윈도우를 생성합니다
