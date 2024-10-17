@@ -1,0 +1,13 @@
+/* 인포윈도우 관련 스타일 */
+.info-content h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+.info-content p {
+    margin: 5px 0;  
+}
+.info .close:hover {
+    cursor: pointer;
+}
