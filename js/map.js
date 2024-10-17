@@ -60,14 +60,14 @@ let hospitalData = [];
 var markers = [];
 
 // 마커와 커스텀 오버레이를 추가하는 함수
-async function addMarkerWithOverlay(data, name, tel, usableBed, totalBed) {
+async function addMarkerWithOverlay(data, name, tel, usableBed, totalBed, updateTime) {
     const markerPosition = new kakao.maps.LatLng(data[0].lat, data[0].lon);
     const marker = new kakao.maps.Marker({
         map: map,
         position: markerPosition,
         image: usableBed > 0 ? greenMarkerImage : redMarkerImage,
     });
-    markers.push({ marker, position: markerPosition, name, tel, usableBed, totalBed });
+    markers.push({ marker, position: markerPosition, name, tel, usableBed, totalBed, updateTime });
     // 커스텀 오버레이에 표시할 내용
     var content = `
     <div class="wrap">
@@ -75,7 +75,8 @@ async function addMarkerWithOverlay(data, name, tel, usableBed, totalBed) {
         <div class="info-content">
           <h4>${name}</h4>
           <p>${tel}</p>
-          <p>${usableBed}/${totalBed} (가용병상 / 총병상)</p>
+          <p>${usableBed}/${totalBed}</p>
+          <p>갱신시간 : ${updateTime.substr(8, 2)}시${updateTime.substr(10, 2)}분</p>
         </div>
         <div class="close" onclick="closeOverlay()" title="닫기"></div>
       </div>
@@ -102,11 +103,6 @@ async function addMarkerWithOverlay(data, name, tel, usableBed, totalBed) {
     kakao.maps.event.addListener(marker, "mouseout", function () {
         overlay.setMap(null);
     });
-
-    // 닫기 버튼 클릭 이벤트
-    document.querySelector(".close").onclick = function () {
-        closeOverlay(overlay);
-    };
 }
 
 //모바일 상태 터치 이벤트 추후 구현
@@ -117,6 +113,7 @@ function closeOverlay(overlay) {
     overlay.setMap(null);
 }
 
+//서울의 응급실들의 데이터 가공
 (async () => {
     let responseEmer = await fetch(
         "https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&STAGE1=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&numOfRows=100"
@@ -140,7 +137,7 @@ function closeOverlay(overlay) {
         getLatLon(getLanLonUrl + hpid).then((data) => {
             addMarkerWithOverlay(data, name, tel, usableBed, totalBed, updateTime);
         });
-        // console.log('============');
+        // console.log("============");
         // console.log(name);
         // console.log(hpid);
         // console.log(usableBed);
