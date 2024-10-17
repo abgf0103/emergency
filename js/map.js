@@ -26,6 +26,7 @@ async function getLatLon(url) {
     return null; // 에러 발생 시 null 반환
   }
 }
+
 const getLanLonUrl =
   "https://apis.data.go.kr/B552657/ErmctInfoInqireService/getEgytBassInfoInqire?serviceKey=6N1JeuU2GFvmzRpDpgjpymP4hREckoNOTCBysivZs3BakGZwtFTvdBNyf3e50vP8BaFH9O4GALYgNiUaHLIuUA%3D%3D&HPID=";
 
@@ -46,48 +47,79 @@ var mapContainer = document.getElementById("map"), // 지도를 표시할 div
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
 
-var redImageSrc = "img/redMarker.png", // 빨간 마커이미지 주소
-  imageSize = new kakao.maps.Size(25, 38), // 빨간 마커이미지의 크기
-  imageOption = { offset: new kakao.maps.Point(27, 69) }; // 빨간 마커이미지의 옵션
+// 마커 이미지 설정
+var redImageSrc = "img/redMarker.png", // 빨간마커이미지 주소
+  greenImageSrc = "img/greenMarker.png", // 초록마커이미지 주소
+  imageSize = new kakao.maps.Size(25, 38), // 마커이미지의 크기
+  imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션
 
-var greenImageSrc = "img/greenMarker.png", // 초록 마커이미지 주소
-  imageSize = new kakao.maps.Size(25, 38), // 초록 마커이미지의 크기
-  imageOption = { offset: new kakao.maps.Point(27, 69) }; // 초록 마커이미지의 옵션
+// 마커의 이미지정보를 가지고 있는 마커이미지를 생성
+var greenMarkerImage = new kakao.maps.MarkerImage(
+  greenImageSrc,
+  imageSize,
+  imageOption
+);
+var redMarkerImage = new kakao.maps.MarkerImage(
+  redImageSrc,
+  imageSize,
+  imageOption
+);
 
-// 초록 마커의 이미지정보를 가지고 있는 초록 마커이미지를 생성
-var greenMarkerImage = new kakao.maps.MarkerImage(greenImageSrc, imageSize, imageOption);
+// 마커와 커스텀 오버레이를 추가하는 함수
+async function addMarkerWithOverlay(data, name, tel, usableBed, totalBed) {
+  const marker = new kakao.maps.Marker({
+    map: map,
+    position: new kakao.maps.LatLng(data[0].lat, data[0].lon),
+    image: usableBed > 0 ? greenMarkerImage : redMarkerImage,
+  });
 
-// 빨간 마커의 이미지정보를 가지고 있는 초록 마커이미지를 생성
-var redMarkerImage = new kakao.maps.MarkerImage(redImageSrc, imageSize, imageOption);
+  // 커스텀 오버레이에 표시할 내용
+  var content = `
+    <div class="wrap">
+      <div class="info">
+        <div class="info-content">
+          <h4>${name}</h4>
+          <p>${tel}</p>
+          <p>${usableBed}/${totalBed} (가용병상 / 총병상)</p>
+        </div>
+        <div class="close" onclick="closeOverlay()" title="닫기"></div>
+      </div>
+    </div>`;
 
-// 마커들을 모아놓을 변수
-var markers = [];
+  // 커스텀 오버레이 생성
+  const overlay = new kakao.maps.CustomOverlay({
+    content: content,
+    map: null, // 초기에는 지도에 표시하지 않음
+    position: marker.getPosition(),
+  });
 
-// 인포윈도우를 표시하는 클로저를 만드는 함수입니다
-function makeOverListener(map, marker, infowindow) {
-  return function () {
-    infowindow.open(map, marker);
+  // 마커에 클릭 이벤트 추가
+  kakao.maps.event.addListener(marker, "click", function () {
+    overlay.setMap(map);
+  });
+
+  // 마우스 오버 이벤트
+  kakao.maps.event.addListener(marker, "mouseover", function () {
+    overlay.setMap(map);
+  });
+
+  // 마우스 아웃 이벤트
+  kakao.maps.event.addListener(marker, "mouseout", function () {
+    overlay.setMap(null);
+  });
+
+  // 닫기 버튼 클릭 이벤트
+  document.querySelector(".close").onclick = function () {
+    closeOverlay(overlay);
   };
 }
 
-// 인포윈도우를 닫는 클로저를 만드는 함수입니다
-function makeOutListener(infowindow) {
-  return function () {
-    infowindow.close();
-  };
-}
+//모바일 상태 터치 이벤트 추후 구현
+//kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
 
-function makeToggleListener(map, marker, infowindow) {
-  let isOpen = false; // 인포윈도우가 열려 있는지 여부를 추적하는 변수
-
-  return function () {
-    if (isOpen) {
-      infowindow.close(); // 인포윈도우가 열려 있다면 닫기
-    } else {
-      infowindow.open(map, marker); // 인포윈도우가 닫혀 있다면 열기
-    }
-    isOpen = !isOpen; // 상태 토글
-  };
+// 인포윈도우 닫기 함수
+function closeOverlay(overlay) {
+  overlay.setMap(null);
 }
 
 (async () => {
@@ -101,67 +133,15 @@ function makeToggleListener(map, marker, infowindow) {
   let xmlDocEmer = parseXMLEmer.parseFromString(t_xml_emer, "text/xml");
   let emerObject = xmlDocEmer.querySelectorAll("items item");
   emerObject.forEach((value) => {
-    let name = value.querySelector("dutyName").textContent; //병원 이름
-    let hpid = value.querySelector("hpid").textContent; //병원 고유 ID
-    let usableBed = value.querySelector("hvec").textContent; //가용병상
-    let totalBed = value.querySelector("hvs01").textContent; //보유병상
-    let tel = value.querySelector("dutyTel3").textContent; //전화번호
+    let name = value.querySelector("dutyName").textContent; // 병원 이름
+    let hpid = value.querySelector("hpid").textContent; // 병원 고유 ID
+    let usableBed = value.querySelector("hvec").textContent; // 가용병상
+    let totalBed = value.querySelector("hvs01").textContent; // 보유병상
+    let tel = value.querySelector("dutyTel3").textContent; // 전화번호
     let updateTime = value.querySelector("hvidate").textContent; //업데이트 최신화 시간
     getLatLon(getLanLonUrl + hpid).then((data) => {
-
-      //마커 생성
-      if(usableBed > 0){
-        var marker = new kakao.maps.Marker({
-          map: map, //마커를 생성할 지도
-          position: new kakao.maps.LatLng(data[0].lat, data[0].lon), //마커 위치
-          image: greenMarkerImage, // 마커이미지 설정
-        });
-      } else{
-        var marker = new kakao.maps.Marker({
-          map: map, //마커를 생성할 지도
-          position: new kakao.maps.LatLng(data[0].lat, data[0].lon), //마커 위치
-          image: redMarkerImage, // 마커이미지 설정
-        });
-      }
-      
-      // 마커가 지도 위에 표시되도록 설정합니다
-      marker.setMap(map);
-      // 마커에 표시할 인포윈도우를 생성합니다
-      var infowindow = new kakao.maps.InfoWindow({
-        content:
-          "<br>" +
-          name +
-          "<br>" +
-          tel +
-          "<br>" +
-          usableBed +
-          "/" +
-          totalBed +
-          " (가용병상 / 총병상)<br>" +
-          "&nbsp", // 인포윈도우에 표시할 내용
-      });
-      //마우스 오버 이벤트
-      kakao.maps.event.addListener(
-        marker,
-        "mouseover",
-        makeOverListener(map, marker, infowindow)
-      );
-      //마우스 아웃 이벤트 (오버 상태에서 마우스가 마커에 나갈때 발생하는 이벤트)
-      kakao.maps.event.addListener(
-        marker,
-        "mouseout",
-        makeOutListener(infowindow)
-      );
-      //마우스 클릭 이벤트 (토글상태로 다시 클릭하면 인포 윈도우가 사라짐)
-      kakao.maps.event.addListener(
-        marker,
-        "click",
-        makeToggleListener(map, marker, infowindow)
-      );
-      //모바일 상태 터치 이벤트 추후 구현
-      //kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+      addMarkerWithOverlay(data, name, tel, usableBed, totalBed, updateTime);
     });
-
     // console.log('============');
     // console.log(name);
     // console.log(hpid);
