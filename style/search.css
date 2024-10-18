@@ -1,17 +1,13 @@
 /* 검색 관련 스타일 */
 .search-container {
     position: fixed;
-    top: 50px; 
+    top: 20px; 
     left: 20px; 
     background-color: rgba(255, 255, 255, 0.8); 
     padding: 10px;
     border-radius: 5px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
     z-index: 2; 
-  }
-  #availableOnly{
-    top :10px;
-    left : 500px;
   }
   .result-list {
     max-height: 200px; /* 최대 높이 설정 */

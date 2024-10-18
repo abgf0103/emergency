@@ -2,14 +2,14 @@ let currentInfoWindow = null;
 
 function performSearch() {
     const searchTerm = document.getElementById("searchInput").value.toLowerCase();
-    const showAvailableOnly = document.getElementById("availableOnly").checked;
+    
     const resultList = document.getElementById("resultList");
     resultList.innerHTML = "";
 
     const filteredHospitals = hospitalData.filter((hospital) => {
         const matchesSearchTerm = hospital.name.toLowerCase().includes(searchTerm);
-        const hasAvailableBeds = !showAvailableOnly || hospital.usableBed > 0;
-        return matchesSearchTerm && hasAvailableBeds;
+        
+        return matchesSearchTerm;
     });
     
     filteredHospitals.forEach((hospital) => {
@@ -49,7 +49,7 @@ function closeInfoWindow() {
         currentInfoWindow.close();
         currentInfoWindow = null; 
     }
-    
+
 }
 
 document.getElementById("searchButton").addEventListener("click", performSearch);
