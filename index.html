@@ -10,27 +10,36 @@
     <link rel="stylesheet" href="/style/modal.css">
 </head>
 <body>
+
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="병원 이름 검색"/>
     <button id="searchButton">검색</button>
-    <ul id="resultList"></ul>
+    <ul id="resultList" class="result-list"></ul> 
 </div>
+
+<div class="map-controls">
+    <label>
+     <input type="checkbox" id="availableOnly"> 가용 필터
+    </label>
+</div>
+
 <div id="map"></div>
 
 <button class="sticky-button" id="modalButton">환자 메모 입력하기</button>
 
+    
+    
 <div id="myModal" class="modal">
     <div class="modal-content">
         <button id="closeButton" class="close-button">✖</button>
         <h2>환자 정보</h2>
-        <textarea id="userInput" placeholder="환자의 기본 정보(이름, 나이 등), 현재 상태, 체온, 그리고 지병을 입력해 주세요. 환자의 정보를 미리 입력해 주시면 의료진에게 큰 도움이 됩니다. " rows="10"></textarea>
+        <textarea id="userInput" placeholder="환자의 기본 정보(이름, 나이 등), 현재 상태, 체온, 그리고 지병을 입력해 주세요. 환자의 정보를 미리 입력해 주시면 의료진에게 큰 도움이 됩니다." rows="10"></textarea>
         <div class="button-container">
             <button id="saveButton" class="action-button">저장</button>
             <button id="editButton" class="action-button" style="display: none;">수정</button>
         </div>
     </div>
 </div>
-
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e3b280d2b743d5969774693f4f482db7"></script>
 <script src="/js/map.js"></script>
