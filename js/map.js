@@ -59,6 +59,8 @@ let hospitalData = [];
 // 마커들을 모아놓을 변수
 var markers = [];
 
+let currentOverlay = null; // 전역 변수로 오버레이 인스턴스를 저장
+
 // 마커와 커스텀 오버레이를 추가하는 함수
 async function addMarkerWithOverlay(data, name, tel, usableBed, totalBed, updateTime) {
     const markerPosition = new kakao.maps.LatLng(data[0].lat, data[0].lon);
@@ -67,17 +69,29 @@ async function addMarkerWithOverlay(data, name, tel, usableBed, totalBed, update
         position: markerPosition,
         image: usableBed > 0 ? greenMarkerImage : redMarkerImage,
     });
-    markers.push({ marker, position: markerPosition, name, tel, usableBed, totalBed, updateTime });
+    markers.push({
+        marker,
+        position: markerPosition,
+        name,
+        tel,
+        usableBed,
+        totalBed,
+        updateTime,
+    });
+
+    // 병상 가용 여부에 따라 클래스 설정
+    let overlayClass = usableBed > 0 ? "greenOverlay" : "redOverlay";
+    let bedClass = usableBed > 0 ? "greenBed" : "redBed";
+
     // 커스텀 오버레이에 표시할 내용
     var content = `
-    <div class="wrap">
-      <div class="info">
-        <div class="info-content">
-          <h4>${name}</h4>
-          <p>${tel}</p>
-          <p>${usableBed}/${totalBed}</p>
-          <p>갱신시간 : ${updateTime.substr(8, 2)}시${updateTime.substr(10, 2)}분</p>
-        </div>
+    <div class="infoWindow ${overlayClass}">
+      <div class="box">
+          <h4 class="name">${name}</h4>
+          <p class="tel">${tel}</p>
+          <p class="bedCount ${bedClass}">${usableBed}/${totalBed}</p>
+          <p class="updateTime">갱신시간 : ${updateTime.substr(8, 2)}시 ${updateTime.substr(10, 2)}분</p>
+      </div>
         <div class="close" onclick="closeOverlay()" title="닫기"></div>
       </div>
     </div>`;
@@ -112,6 +126,13 @@ async function addMarkerWithOverlay(data, name, tel, usableBed, totalBed, update
 function closeOverlay(overlay) {
     overlay.setMap(null);
 }
+//인포윈도우 닫기 함수
+// function closeOverlay() {
+//   if (currentOverlay) {
+//     currentOverlay.setMap(null); // 현재 오버레이 닫기
+//     currentOverlay = null; // 현재 오버레이 변수 초기화
+//   }
+// }
 
 //서울의 응급실들의 데이터 가공
 (async () => {
