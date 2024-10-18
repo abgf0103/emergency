@@ -122,7 +122,6 @@ async function addMarkerWithOverlay(
     content: content,
     map: null, // 초기에는 지도에 표시하지 않음
     position: marker.getPosition(),
-    xAnchor: 1.0, // 오버레이가 마커의 중앙에 위치하도록 설정
   });
 
   // 마커에 클릭 이벤트 추가
