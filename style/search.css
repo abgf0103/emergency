@@ -1,7 +1,6 @@
 /* 검색 관련 스타일 */
 .search-container {
     position: fixed;
-    
     top: 50px; 
     left: 20px; 
     background-color: rgba(255, 255, 255, 0.8); 
@@ -9,7 +8,6 @@
     border-radius: 5px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
     z-index: 2; 
-    
   }
   #availableOnly{
     top :10px;
@@ -20,7 +18,6 @@
     overflow-y: auto; /* 세로 스크롤 가능 */
     margin-top: 10px; /* 검색 입력란과 결과 목록 간격 */
   }
-
   li {
     transition: background-color 0.5s;
   }
