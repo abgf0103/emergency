@@ -3,3 +3,31 @@
   padding: 0;
   list-style: none;
 }
+
+.myLocation{
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+}
+
+.myLocation::before{
+  content:  '';
+  background: #ff0000a2;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: -45px;
+  left: -7px;
+  border-radius: 50%;
+  animation: pulse 1.3s ease-in-out infinite; 
+}
+
+
+@keyframes pulse{
+  100%{
+      opacity: 0.2;
+      transform: translate(-50%, -50%);
+      width: 650%;
+      height: 650%;
+  }
+}
