@@ -5,7 +5,7 @@ var imageSrc = "img/emer.png", // 이미지 주소
 
 // 마커의 이미지정보를 가지고 있는 마커이미지를 생성
 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-
+var abc = 123;
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
 if (navigator.geolocation) {
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
