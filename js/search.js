@@ -44,10 +44,12 @@ function performSearch() {
 }
 
 function closeInfoWindow() {
+
     if (currentInfoWindow) {
         currentInfoWindow.close();
         currentInfoWindow = null; 
     }
+    
 }
 
 document.getElementById("searchButton").addEventListener("click", performSearch);
