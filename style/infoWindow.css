@@ -28,8 +28,9 @@
 }
 
 .infoWindow .updateTime {
-  font-size: 9px;
+  font-size: 10px;
   text-align: right;
+  font-weight: 600;
 }
 
 .infoWindow .bedCount {
