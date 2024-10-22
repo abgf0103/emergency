@@ -1,3 +1,23 @@
+const toggleInput = document.getElementById("mode-toggle");
+
+toggleInput.addEventListener("change", () => {
+    markers.forEach(markerData => {
+        const { marker, usableBed } = markerData;
+
+        if (toggleInput.checked) {
+            // 토글이 체크된 경우: 가용병상이 없는 병원 마커 숨김
+            if (usableBed <= 0) {
+                marker.setMap(null);
+            } else {
+                marker.setMap(map);
+            }
+        } else {
+            // 토글이 체크 해제된 경우: 모든 병원 마커 보임
+            marker.setMap(map);
+        }
+    });
+});
+
 // getLatLon(url) => url을 파라미터로 받아서 위도와 경도를 배열로 리턴하는 함수
 async function getLatLon(url) {
     try {

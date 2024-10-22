@@ -1,15 +1,17 @@
 let currentInfoWindow = null;
-
+document.getElementById("mode-toggle").addEventListener('change', (e)=>{
+    performSearch();  
+})
 function performSearch() {
     const searchTerm = document.getElementById("searchInput").value.toLowerCase();
-
+    const showAvailableOnly = document.getElementById("mode-toggle").checked;
     const resultList = document.getElementById("resultList");
     resultList.innerHTML = "";
 
     const filteredHospitals = hospitalData.filter((hospital) => {
         const matchesSearchTerm = hospital.name.toLowerCase().includes(searchTerm);
-
-        return matchesSearchTerm;
+        const hasAvailableBeds = !showAvailableOnly || hospital.usableBed > 0;
+        return matchesSearchTerm&& hasAvailableBeds;
     });
 
     filteredHospitals.forEach((hospital) => {
