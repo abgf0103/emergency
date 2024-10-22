@@ -5,6 +5,7 @@
     left: 20px; 
     background-color: rgba(255, 255, 255, 0.8); 
     padding: 10px;
+    height: 30px;
     border-radius: 5px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
     z-index: 2; 
@@ -15,10 +16,10 @@
     margin-top: 10px; /* 검색 입력란과 결과 목록 간격 */
   }
   li {
-    transition: background-color 0.5s;
+    transition: background-color 0.5s ease;
   }
   li:hover {
-    background-color: gold;
+    background-color: var(--primary-light-color);
   }
   #searchInput {
     width: 400px;
@@ -30,13 +31,14 @@
   #searchButton {
     padding: 5px 10px;
     border: none;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
     border-radius: 3px;
     cursor: pointer;
+    transition: background-color 0.5s ease;
   }
   #searchButton:hover {
-    background-color: #0056b3;
+    background-color: var(--primary-hover-color);
   }
   
   #map {

@@ -4,6 +4,12 @@
   list-style: none;
 }
 
+:root {
+  --primary-color: #007bff; /* 기본 색상 */
+  --primary-light-color : #5baaff; /*연한 색상*/
+  --primary-hover-color: #0056b3; /* hover 색상 */
+}
+
 .myLocation{
   position: absolute;
   width: 1em;
@@ -30,4 +36,26 @@
       width: 650%;
       height: 650%;
   }
+}
+
+.myLocation-container {
+  position: fixed; /* 고정 위치 */
+  bottom: 20px;
+  right: 40px; /* 오른쪽에서 20px */
+  z-index: 1;
+}
+
+.myLocation-container button {
+  border: none; /* 테두리 없음 */
+  border-radius: 10px; /* 둥근 모서리 */
+  padding: 1px; /* 안쪽 여백 */
+  cursor: pointer; /* 커서 포인터 */
+  font-size: 16px; /* 폰트 크기 */
+  transition: background-color 0.3s; /* 배경색 전환 효과 */
+}
+
+.myLocation-container button img {
+  width: 30px; /* 이미지 너비 */
+  height: 30px; /* 이미지 높이 */
+  /* 필요에 따라 추가 스타일을 적용 */
 }

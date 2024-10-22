@@ -21,22 +21,27 @@
   position: relative; /* 위치 조정을 위해 상대 위치 설정 */
 }
 
+.infoLabel{
+  font-size: 25px;
+  font-weight: bold;
+}
+
 .modal-content h2 {
   margin-bottom: 15px;
 }
 
 textarea {
   width: calc(100% - 20px); /* 전체 너비에서 패딩을 제외 */
-  height: 150px; /* 고정된 높이 */
+  height: 200px; /* 고정된 높이 */
   resize: none; /* 크기 조정 불가 */
-  margin-bottom: 15px;
+  margin: 10px 0 10px 0;
   padding: 9px; /* 패딩 추가 */
   border: 1px solid #ccc; /* 테두리 스타일 */
   border-radius: 4px; /* 둥근 모서리 */
   font-size: 14px; /* 폰트 크기 */
 }
 
-.close-button {
+.closeButton {
   position: absolute; /* 절대 위치 설정 */
   top: 10px; /* 상단 여백 */
   right: 10px; /* 우측 여백 */
@@ -46,24 +51,18 @@ textarea {
   cursor: pointer; /* 포인터 커서 */
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end; /* 버튼을 우측 정렬 */
-}
-
 .action-button {
-  padding: 10px 15px;
-  background-color: #007bff; /* 파란색 배경 */
+  padding: 10px 20px;
+  background-color: var(--primary-color); /* 파란색 배경 */
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 10px; /* 버튼 간격 추가 */
-  height: 40px; /* 버튼 높이 통일 */
+  transition: background-color 0.5s ease;
 }
 
 .action-button:hover {
-  background-color: #0056b3; /* Hover 시 색상 변경 */
+  background-color: var(--primary-hover-color);
 }
 
 /* 기타 스타일 유지 */
@@ -85,15 +84,40 @@ textarea {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.sticky-button {
+.modalButton {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 40px;
+  left: 20px;
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   z-index: 10;
+  transition: background-color 0.5s ease;
+}
+
+.modalButton:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.temperature {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: space-between; /* 가로로 공간 분배 */
+}
+
+.temperature div {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+}
+
+.temperature input {
+  margin-top: 5px;
+}
+
+.button-container {
+  display: flex; /* 버튼들이 가로로 나란히 정렬 */
 }
