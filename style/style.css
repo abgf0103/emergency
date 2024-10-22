@@ -47,9 +47,11 @@ body {
 
 .myLocation-container {
     position: fixed; /* 고정 위치 */
-    bottom: 20px;
+    bottom: 24px;
     right: 40px; /* 오른쪽에서 20px */
     z-index: 1;
+    width: 35px;
+    height: 35px;
 }
 
 .myLocation-container button {

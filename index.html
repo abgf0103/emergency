@@ -11,22 +11,25 @@
     <link rel="stylesheet" href="/style/modal.css" />
     <link rel="stylesheet" href="/style/toggle.css">
   </head>
-  <body>
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="병원 이름 검색" />
-      <button id="searchButton">검색</button>
-      <ul id="resultList" class="resultList"></ul>
-    </div>
 
-    <div class="cont">
-        <div class="toggle">
-            <input type="checkbox" id="mode-toggle" class="toggle__input">
-            <label for="mode-toggle" class="toggle__label"></label>
+  <body>
+    <header>
+        <div class="search-container">
+                <input type="text" id="searchInput" placeholder="병원 이름 검색" />
+                <button id="searchButton">검색</button>
+                <ul id="resultList" class="resultList"></ul>
         </div>
-    </div>
+  
+        <div class="cont">
+            <div class="toggle">
+                <input type="checkbox" id="mode-toggle" class="toggle__input">
+                <label for="mode-toggle" class="toggle__label"></label>
+            </div>
+        </div>
+    </header>
+    
 
     <div id="map"></div>
-
     <button class="modalButton" id="modalButton">환자 메모 입력하기</button>
 
     <div id="modal" class="modal">
