@@ -1,7 +1,7 @@
 * {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 body {
@@ -9,60 +9,60 @@ body {
 }
 
 :root {
-  --primary-color: #007bff; /* 기본 색상 */
-  --primary-light-color : #5baaff; /*연한 색상*/
-  --primary-hover-color: #0056b3; /* hover 색상 */
-  --primary-color-white: rgba(255, 255, 255, 0.8);
-  --primary-color-red: #ff5555d0;
-  --primary-color-green: #00ff62d0;
+    --primary-color: #007bff; /* 기본 색상 */
+    --primary-light-color : #5baaff; /*연한 색상*/
+    --primary-hover-color: #0056b3; /* hover 색상 */
+    --primary-color-white: rgba(255, 255, 255, 0.8);
+    --primary-color-red: #ff5555d0;
+    --primary-color-green: #00ff62d0;
 }
 
 .myLocation{
-  position: absolute;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
 }
 
 .myLocation::before{
-  content:  '';
-  background: #ff0000a2;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: -45px;
-  left: -7px;
-  border-radius: 50%;
-  animation: pulse 1.3s ease-in-out infinite; 
+    content:  '';
+    background: #ff0000a2;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: -45px;
+    left: -7px;
+    border-radius: 50%;
+    animation: pulse 1.3s ease-in-out infinite; 
 }
 
 
 @keyframes pulse{
-  100%{
-      opacity: 0.2;
-      transform: translate(-50%, -50%);
-      width: 650%;
-      height: 650%;
-  }
+    100%{
+        opacity: 0.2;
+        transform: translate(-50%, -50%);
+        width: 400%;
+        height: 400%;
+    }
 }
 
 .myLocation-container {
-  position: fixed; /* 고정 위치 */
-  bottom: 20px;
-  right: 40px; /* 오른쪽에서 20px */
-  z-index: 1;
+    position: fixed; /* 고정 위치 */
+    bottom: 20px;
+    right: 40px; /* 오른쪽에서 20px */
+    z-index: 1;
 }
 
 .myLocation-container button {
-  border: none; /* 테두리 없음 */
-  border-radius: 10px; /* 둥근 모서리 */
-  padding: 1px; /* 안쪽 여백 */
-  cursor: pointer; /* 커서 포인터 */
-  font-size: 16px; /* 폰트 크기 */
-  transition: background-color 0.3s; /* 배경색 전환 효과 */
+    border: none; /* 테두리 없음 */
+    border-radius: 10px; /* 둥근 모서리 */
+    padding: 1px; /* 안쪽 여백 */
+    cursor: pointer; /* 커서 포인터 */
+    font-size: 16px; /* 폰트 크기 */
+    transition: background-color 0.3s; /* 배경색 전환 효과 */
 }
 
 .myLocation-container button img {
-  width: 30px; /* 이미지 너비 */
-  height: 30px; /* 이미지 높이 */
-  /* 필요에 따라 추가 스타일을 적용 */
+    width: 30px; /* 이미지 너비 */
+    height: 30px; /* 이미지 높이 */
+    /* 필요에 따라 추가 스타일을 적용 */
 }
