@@ -1,3 +1,4 @@
+
 let currentInfoWindow = null;
 document.getElementById("mode-toggle").addEventListener('change', (e)=>{
     performSearch();  
