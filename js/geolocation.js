@@ -1,3 +1,5 @@
+const myLocationButton = document.getElementById("myLocationButton");
+
 // 마커 이미지 설정
 var imageSrc = "img/emer.png", // 이미지 주소
     imageSize = new kakao.maps.Size(40, 40), // 마커이미지의 크기
@@ -19,6 +21,10 @@ if (navigator.geolocation) {
 
         // 마커와 인포윈도우를 표시합니다
         displayMarker(locPosition);
+
+        myLocationButton.addEventListener("click", function () {
+            panTo();
+        });
     });
 } else {
     // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
@@ -43,7 +49,15 @@ function displayMarker(locPosition) {
         content: `<div class="myLocation"></div>`,
         position: locPosition,
     });
-
     // 지도 중심좌표를 접속위치로 변경합니다
     map.setCenter(locPosition);
+}
+
+function panTo() {
+    // 이동할 위도 경도 위치를 생성합니다
+    var moveLatLon = new kakao.maps.LatLng(lat, lon);
+
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    map.panTo(moveLatLon);
 }

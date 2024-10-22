@@ -23,11 +23,6 @@ closeButton.addEventListener("click", function () {
 saveButton.addEventListener("click", function () {
     const inputValue = inputField.value;
 
-    if (inputValue.trim() === "") {
-        alert("값을 입력해 주세요.");
-        return;
-    }
-
     savedValue = inputValue; // 입력값 저장
     inputField.disabled = true; // 입력 필드 비활성화
     inputField.classList.add("disabled"); // 비활성화 스타일 추가
