@@ -3,11 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>16:35</title>
+    <link rel="icon" href="/img/emer2.png">
+    <title>삐용삐용</title>
     <link rel="stylesheet" href="/style/style.css" />
     <link rel="stylesheet" href="/style/search.css" />
     <link rel="stylesheet" href="/style/infoWindow.css" />
     <link rel="stylesheet" href="/style/modal.css" />
+    <link rel="stylesheet" href="/style/toggle.css">
   </head>
   <body>
     <div class="search-container">
@@ -15,6 +17,14 @@
       <button id="searchButton">검색</button>
       <ul id="resultList" class="resultList"></ul>
     </div>
+
+    <div class="cont">
+        <div class="toggle">
+            <input type="checkbox" id="mode-toggle" class="toggle__input">
+            <label for="mode-toggle" class="toggle__label"></label>
+        </div>
+    </div>
+
     <div id="map"></div>
 
     <button class="modalButton" id="modalButton">환자 메모 입력하기</button>
@@ -58,5 +68,6 @@
     <script src="/js/geolocation.js"></script>
     <script src="/js/modal.js"></script>
     <script src="/js/search.js"></script>
+    <script src="/js/toggle.js"></script>
   </body>
 </html>
