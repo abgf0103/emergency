@@ -17,6 +17,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     if (blockMode === "enabled") {
         body.classList.add("block-mode");
-        toggle.checked = true;
+        toggle.checked = false;
     }
 });
