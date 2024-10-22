@@ -2,6 +2,8 @@
 let currentInfoWindow = null;
 document.getElementById("mode-toggle").addEventListener('change', (e)=>{
     performSearch();  
+    const resultList = document.getElementById("resultList");
+    resultList.innerHTML = "";
 })
 function performSearch() {
     const searchTerm = document.getElementById("searchInput").value.toLowerCase();
