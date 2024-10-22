@@ -32,13 +32,13 @@ body {
     top: -45px;
     left: -7px;
     border-radius: 50%;
-    animation: pulse 1.3s ease-in-out infinite; 
+    animation: pulse 1.5s ease-in-out infinite; 
 }
 
 
 @keyframes pulse{
     100%{
-        opacity: 0.2;
+        opacity: 0;
         transform: translate(-50%, -50%);
         width: 400%;
         height: 400%;
@@ -48,7 +48,7 @@ body {
 .myLocation-container {
     position: fixed; /* 고정 위치 */
     bottom: 24px;
-    right: 40px; /* 오른쪽에서 20px */
+    right: 40px;
     z-index: 1;
     width: 35px;
     height: 35px;
@@ -66,5 +66,4 @@ body {
 .myLocation-container button img {
     width: 30px; /* 이미지 너비 */
     height: 30px; /* 이미지 높이 */
-    /* 필요에 따라 추가 스타일을 적용 */
 }
