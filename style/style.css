@@ -47,7 +47,7 @@ body {
 
 .myLocation-container {
     position: fixed; /* 고정 위치 */
-    bottom: 24px;
+    bottom: 20px;
     right: 40px;
     z-index: 1;
     width: 35px;
@@ -60,7 +60,8 @@ body {
     padding: 1px; /* 안쪽 여백 */
     cursor: pointer; /* 커서 포인터 */
     font-size: 16px; /* 폰트 크기 */
-    transition: background-color 0.3s; /* 배경색 전환 효과 */
+    background-color: var(--primary-color-white);
+    height: 32px;
 }
 
 .myLocation-container button img {
