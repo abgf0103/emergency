@@ -1,20 +1,11 @@
-const toggleSearchButton = document.getElementById("toggleSearchButton");
 const searchContainer = document.querySelector(".search-container");
 
-toggleSearchButton.addEventListener("click", () => {
-    if (searchContainer.style.display === "none" || searchContainer.style.display === "") {
-        searchContainer.style.display = "block"; 
-    } else {
-        searchContainer.style.display = "none"; 
-    }
-});
-
 let currentInfoWindow = null;
-document.getElementById("mode-toggle").addEventListener('change', (e)=>{
-    performSearch();  
+document.getElementById("mode-toggle").addEventListener("change", (e) => {
+    performSearch();
     const resultList = document.getElementById("resultList");
     resultList.innerHTML = "";
-})
+});
 function performSearch() {
     const searchTerm = document.getElementById("searchInput").value.toLowerCase();
     const showAvailableOnly = document.getElementById("mode-toggle").checked;
@@ -24,7 +15,7 @@ function performSearch() {
     const filteredHospitals = hospitalData.filter((hospital) => {
         const matchesSearchTerm = hospital.name.toLowerCase().includes(searchTerm);
         const hasAvailableBeds = !showAvailableOnly || hospital.usableBed > 0;
-        return matchesSearchTerm&& hasAvailableBeds;
+        return matchesSearchTerm && hasAvailableBeds;
     });
 
     filteredHospitals.forEach((hospital) => {
@@ -91,4 +82,42 @@ document.getElementById("searchInput").addEventListener("keydown", (event) => {
         event.preventDefault();
         performSearch();
     }
+});
+
+/* hidden button */
+document.addEventListener("DOMContentLoaded", function () {
+    // .hiddenBtn 클릭 시 search-container 위치를 위로 이동해 숨김
+    const btnSearch = document.querySelector(".hidden");
+    const searchContainer = document.querySelector(".search-container");
+    const icon = btnSearch.querySelector("i"); // 아이콘 요소 선택
+    const toggleContainer = document.querySelector(".toggle-container");
+
+    let isSearchVisible = true;
+
+    btnSearch.addEventListener("click", function (event) {
+        event.preventDefault(); // 버튼 기본 동작 방지
+        // 검색창의 높이 구하기
+        const searchHeight = searchContainer.clientHeight;
+        // mediaQuery.matches => 현재 윈도우 mobile크기면 ture, 아니면 false
+        const mediaQuery = window.matchMedia("(max-width: 479px)");
+        console.log(mediaQuery);
+        if (isSearchVisible) {
+            // 검색창을 화면 밖으로 위로 올려서 숨기기
+            searchContainer.style.top = `-${searchHeight}px`; // 위로 숨김
+            icon.classList.remove("fa-caret-up"); // 아이콘 변경
+            icon.classList.add("fa-caret-down");
+            toggleContainer.style.left = "20px";
+            // 모바일 크기일때 실행
+            if (mediaQuery.matches) {
+                toggleContainer.style.left = "0";
+            }
+        } else {
+            // 검색창을 원래 위치로 내려서 보이기
+            searchContainer.style.top = ""; // 다시 보임
+            icon.classList.remove("fa-caret-down"); // 아이콘 변경
+            icon.classList.add("fa-caret-up");
+            toggleContainer.style.left = "";
+        }
+        isSearchVisible = !isSearchVisible;
+    });
 });

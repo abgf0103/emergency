@@ -2,7 +2,7 @@
 .modal {
   display: none; /* 기본적으로 숨김 */
   position: fixed;
-  z-index: 5;
+  z-index: 3;
   left: 0;
   top: 0;
   width: 100%;
@@ -21,12 +21,12 @@
   position: relative; /* 위치 조정을 위해 상대 위치 설정 */
 }
 
-@media (max-width: 639px) {
+@media (max-width: 479px) {
   .modal-content {
     width: 300px;
   }
   #searchInput {
-    width: 250px;
+    width: 240px;
   }
 }
 
@@ -108,8 +108,8 @@ textarea {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  z-index: 10;
-  transition: background-color 0.5s ease;
+  z-index: 3;
+  transition: background-color 0.5s ease-in-out;
 }
 
 .modalButton:hover {

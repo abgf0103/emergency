@@ -1,15 +1,17 @@
-.cont {
+.toggle-container {
     position: fixed;
     top: 33px; 
     left: 530px; 
     z-index: 2;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
+    transition: 1s ease-in-out;
 }
 
-@media (max-width: 595px) {
-    .cont{
-        top: 120px;
-        left: 10px;
+@media (max-width: 479px) {
+    .toggle-container{
+        position: absolute;
+        top: 120%; /* search-container의 바로 아래에 위치 */
+        left: 0;
     }
 }
 
@@ -32,7 +34,7 @@
     border: 3px solid var(--primary-hover-color);
     border-radius: 99px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .block-mode .toggle__label {
@@ -52,5 +54,5 @@
     height: 25px;
     background-color: var(--primary-color-white);
     border-radius: 50%;
-    transition: left 0.3s ease;
+    transition: left 0.3s ease-in-out;
 }

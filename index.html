@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/img/emer2.png">
+    
     <title>삐용삐용</title>
+
+    <!-- fontawesome import -->
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="/style/style.css" />
     <link rel="stylesheet" href="/style/search.css" />
     <link rel="stylesheet" href="/style/infoWindow.css" />
@@ -12,21 +17,25 @@
     <link rel="stylesheet" href="/style/toggle.css">
   </head>
   <body>
-    
-    <button id="toggleSearchButton"><img src="/img/search.png"></button>
 
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="병원 이름 검색" />
-      <button id="searchButton">검색</button>
-      <ul id="resultList" class="resultList"></ul>
-    </div>
-
-    <div class="cont">
-        <div class="toggle">
-            <input type="checkbox" id="mode-toggle" class="toggle__input">
-            <label for="mode-toggle" class="toggle__label"></label>
+        <input type="text" id="searchInput" placeholder="병원 이름 검색" />
+        <button id="searchButton">검색</button>
+        <ul id="resultList" class="resultList"></ul>
+        
+        <div class="hidden">
+            <a class="hiddenBtn" href="#"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+        </div>
+        
+        <div class="toggle-container">
+            <div class="toggle">
+                <input type="checkbox" id="mode-toggle" class="toggle__input">
+                <label for="mode-toggle" class="toggle__label"></label>
+            </div>
         </div>
     </div>
+
+
 
     <div id="map"></div>
 
@@ -49,9 +58,7 @@
             </div>
             <div class="button-container">
                 <button id="saveButton" class="action-button">저장</button>
-                <button id="editButton" class="action-button" style="display: none">
-                  수정
-                </button>
+                <button id="editButton" class="action-button" style="display: none">수정</button>
               </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 const toggle = document.getElementById("mode-toggle");
 const body = document.body;
+const hidden = document.getElementById("hidden");
 
 toggle.addEventListener("change", function () {
     if (this.checked) {
