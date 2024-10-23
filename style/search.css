@@ -89,3 +89,32 @@ li:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
 }
+
+#toggleSearchButton {
+    position: fixed; 
+    top: 30px; 
+    left: 620px; 
+    padding: 1px 1px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    z-index: 1000; 
+    transition: background-color 0.3s; 
+}
+#toggleSearchButton:hover{
+    background-color: rgba(11, 78, 11, 0.274);
+}
+img{
+    width: 40px;
+    height: 30px;
+
+}
+
+
+
+
+
+
+  

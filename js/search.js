@@ -1,3 +1,13 @@
+const toggleSearchButton = document.getElementById("toggleSearchButton");
+const searchContainer = document.querySelector(".search-container");
+
+toggleSearchButton.addEventListener("click", () => {
+    if (searchContainer.style.display === "none" || searchContainer.style.display === "") {
+        searchContainer.style.display = "block"; 
+    } else {
+        searchContainer.style.display = "none"; 
+    }
+});
 
 let currentInfoWindow = null;
 document.getElementById("mode-toggle").addEventListener('change', (e)=>{
