@@ -12,11 +12,7 @@ toggle.addEventListener("change", function () {
 });
 
 // check for saved user preference, if any, on load of the website
-document.addEventListener("DOMContentLoaded", (event) => {
-    const blockMode = localStorage.getItem("blockMode");
-
-    if (blockMode === "enabled") {
-        body.classList.add("block-mode");
-        toggle.checked = false;
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    body.classList.remove("block-mode");
+    localStorage.setItem("blockMode", "disabled");
 });
