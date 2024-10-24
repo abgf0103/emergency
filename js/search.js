@@ -1,14 +1,18 @@
 const searchContainer = document.querySelector(".search-container");
 
 let currentInfoWindow = null;
+let showAvailableOnly = false; // Track the toggle state
+
 document.getElementById("mode-toggle").addEventListener("change", (e) => {
-    performSearch();
-    const resultList = document.getElementById("resultList");
-    resultList.innerHTML = "";
+    showAvailableOnly = e.target.checked; // Update the state based on the toggle
+    const searchTerm = document.getElementById("searchInput").value.trim();
+    if (searchTerm) {
+        performSearch(); 
+    }
 });
+
 function performSearch() {
     const searchTerm = document.getElementById("searchInput").value.toLowerCase();
-    const showAvailableOnly = document.getElementById("mode-toggle").checked;
     const resultList = document.getElementById("resultList");
     resultList.innerHTML = "";
 
@@ -24,12 +28,10 @@ function performSearch() {
         li.style.cursor = "pointer";
         li.addEventListener("click", () => {
             const markerData = markers.find((m) => m.name === hospital.name);
-
             if (markerData) {
                 map.setCenter(markerData.position);
                 closeInfoWindow(); // 현재 인포윈도우 닫기
-
-                // 커스텀 오버레이 생성
+	// 커스텀 오버레이 생성
                 const content = `
           <div class="infoWindow ${markerData.usableBed > 0 ? "greenOverlay" : "redOverlay"}">
             <div class="box">
@@ -86,9 +88,8 @@ document.getElementById("searchInput").addEventListener("keydown", (event) => {
 
 /* hidden button */
 document.addEventListener("DOMContentLoaded", function () {
-    // .hiddenBtn 클릭 시 search-container 위치를 위로 이동해 숨김
+// .hiddenBtn 클릭 시 search-container 위치를 위로 이동해 숨김
     const btnSearch = document.querySelector(".hidden");
-    const searchContainer = document.querySelector(".search-container");
     const icon = btnSearch.querySelector("i"); // 아이콘 요소 선택
     const toggleContainer = document.querySelector(".toggle-container");
 
@@ -96,27 +97,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btnSearch.addEventListener("click", function (event) {
         event.preventDefault(); // 버튼 기본 동작 방지
-        // 검색창의 높이 구하기
+// 검색창의 높이 구하기
         const searchHeight = searchContainer.clientHeight;
-        // mediaQuery.matches => 현재 윈도우 mobile크기면 ture, 아니면 false
+// mediaQuery.matches => 현재 윈도우 mobile크기면 ture, 아니면 false
         const mediaQuery = window.matchMedia("(max-width: 479px)");
-        console.log(mediaQuery);
+
         if (isSearchVisible) {
-            // 검색창을 화면 밖으로 위로 올려서 숨기기
-            searchContainer.style.top = `-${searchHeight}px`; // 위로 숨김
-            icon.classList.remove("fa-caret-up"); // 아이콘 변경
+// 검색창을 화면 밖으로 위로 올려서 숨기기
+            searchContainer.style.top = `-${searchHeight}px`;
+// 위로 숨김
+            icon.classList.remove("fa-caret-up");
+// 아이콘 변경
             icon.classList.add("fa-caret-down");
-            toggleContainer.style.left = "20px";
-            // 모바일 크기일때 실행
-            if (mediaQuery.matches) {
-                toggleContainer.style.left = "0";
-            }
+// 모바일 크기일때 실행
+            toggleContainer.style.left = mediaQuery.matches ? "0" : "20px";
         } else {
-            // 검색창을 원래 위치로 내려서 보이기
+// 검색창을 원래 위치로 내려서 보이기
             searchContainer.style.top = ""; // 다시 보임
             icon.classList.remove("fa-caret-down"); // 아이콘 변경
             icon.classList.add("fa-caret-up");
             toggleContainer.style.left = "";
+            const searchTerm = document.getElementById("searchInput").value.trim();
+            if (searchTerm) {
+                performSearch(); 
+            }
         }
         isSearchVisible = !isSearchVisible;
     });
