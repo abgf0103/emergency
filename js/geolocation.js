@@ -25,7 +25,7 @@ if (navigator.geolocation) {
     });
 } else {
     // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정
-    var locPosition = new kakao.maps.LatLng(37.433008, 127.001686);
+    var locPosition = new kakao.maps.LatLng(37.514631, 127.045049);
 
     displayMarker(locPosition);
 }

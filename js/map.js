@@ -193,9 +193,8 @@ function closeOverlay(overlay) {
                     const { position } = item;
 
                     const distance = getDistance(userLat, userLon, position.getLat(), position.getLng());
-
                     // 현재 병원의 거리가 최소거리보다 작고 가용병상이 있으면
-                    if (distance < minDistance && usableBed > 0) {
+                    if (distance < minDistance && item.usableBed > 0) {
                         // 최적 병원 설정
                         minDistance = distance;
                         nearestMarker = item;
