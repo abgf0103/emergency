@@ -86,7 +86,7 @@ let currentOverlay = null; // 전역 변수로 오버레이 인스턴스를 저�
 // 마커와 커스텀 오버레이를 추가하는 함수 async
 function addMarkerWithOverlay(data, name, tel, usableBed, totalBed, updateTime) {
     const markerPosition = new kakao.maps.LatLng(data[0].lat, data[0].lon);
-    const almostFull = usableBed / totalBed > 0.3;
+    const almostFull = usableBed / totalBed > 0.33;
     const marker = new kakao.maps.Marker({
         map: map,
         position: markerPosition,
