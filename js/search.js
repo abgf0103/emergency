@@ -5,7 +5,7 @@ let showAvailableOnly = false;
 // 토글 버튼 이벤트
 document.getElementById("mode-toggle").addEventListener("change", (e) => {
     showAvailableOnly = e.target.checked;
-//검색시에만 performSearch() 작동
+    //검색시에만 performSearch() 작동
     const searchTerm = document.getElementById("searchInput").value.trim();
     if (searchTerm) {
         performSearch();
@@ -16,18 +16,18 @@ function performSearch() {
     const searchTerm = document.getElementById("searchInput").value.toLowerCase();
     const resultList = document.getElementById("resultList");
     resultList.innerHTML = "";
-//병원 이름 / 토글버튼 작동시 가용가능한 병원만 검색목록 return
+    //병원 이름 / 토글버튼 작동시 가용가능한 병원만 검색목록 return
     const filteredHospitals = hospitalData.filter((hospital) => {
         const matchesSearchTerm = hospital.name.toLowerCase().includes(searchTerm);
         const hasAvailableBeds = !showAvailableOnly || hospital.usableBed > 0;
         return matchesSearchTerm && hasAvailableBeds;
     });
-//검색 목록
+    //검색 목록
     filteredHospitals.forEach((hospital) => {
         const li = document.createElement("li");
         li.textContent = hospital.name;
         li.style.cursor = "pointer";
-//검색 목록 클릭시 이벤트
+        //검색 목록 클릭시 이벤트
         li.addEventListener("click", () => {
             const markerData = markers.find((m) => m.name === hospital.name);
             if (markerData) {
@@ -80,7 +80,7 @@ function performSearch() {
                 }
             });
         }
-//검색목록에서 마우스아웃 하면 인포윈도우를 닫는다.
+        //검색목록에서 마우스아웃 하면 인포윈도우를 닫는다.
         li.addEventListener("mouseout", () => {
             closeInfoWindow();
         });

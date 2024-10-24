@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="kr">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/img/emer2.png" />
@@ -8,35 +8,30 @@
     <title>삐용삐용</title>
 
     <!-- fontawesome import -->
-    <link
-      rel="stylesheet"
-      href="/font-awesome-4.7.0/css/font-awesome.min.css"
-    />
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css" />
 
     <link rel="stylesheet" href="/style/style.css" />
     <link rel="stylesheet" href="/style/search.css" />
     <link rel="stylesheet" href="/style/infoWindow.css" />
     <link rel="stylesheet" href="/style/modal.css" />
     <link rel="stylesheet" href="/style/toggle.css" />
-  </head>
-  <body>
+</head>
+<body>
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="병원 이름 검색" />
-      <button id="searchButton">검색</button>
-      <ul id="resultList" class="resultList"></ul>
+        <input type="text" id="searchInput" placeholder="병원 이름 검색" />
+        <button id="searchButton">검색</button>
+        <ul id="resultList" class="resultList"></ul>
 
-      <div class="hidden">
-        <a class="hiddenBtn" href="#"
-          ><i class="fa fa-caret-up" aria-hidden="true"></i
-        ></a>
-      </div>
-
-      <div class="toggle-container">
-        <div class="toggle">
-          <input type="checkbox" id="mode-toggle" class="toggle__input" />
-          <label for="mode-toggle" class="toggle__label"></label>
+        <div class="hidden">
+            <a class="hiddenBtn" href="#"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
         </div>
-      </div>
+
+        <div class="toggle-container">
+            <div class="toggle">
+            <input type="checkbox" id="mode-toggle" class="toggle__input" />
+            <label for="mode-toggle" class="toggle__label"></label>
+            </div>
+        </div>
     </div>
 
     <div id="map"></div>
@@ -44,52 +39,38 @@
     <button class="modalButton" id="modalButton">환자 메모 입력하기</button>
 
     <div id="modal" class="modal">
-      <div class="modal-content">
+    <div class="modal-content">
         <button id="closeButton" class="closeButton">✖</button>
         <label class="infoLabel" for="userInput">환자 정보</label>
-        <textarea
-          id="userInput"
-          placeholder="환자의 기본 정보(이름, 나이 등), 현재 상태, 체온, 그리고 지병을 입력해 주세요. 환자의 정보를 미리 입력해 주시면 의료진에게 큰 도움이 됩니다. "
-          rows="10"
-        ></textarea>
+        <textarea 
+            id="userInput" 
+            placeholder="환자의 기본 정보(이름, 나이 등), 현재 상태, 체온, 그리고 지병을 입력해 주세요. 환자의 정보를 미리 입력해 주시면 의료진에게 큰 도움이 됩니다. " 
+            rows="10">
+        </textarea>
         <div class="temperature">
-          <div></div>
-          <div>
-            <label class="temperatureLabel" for="userTemperature"
-              >체온 (°C)</label
-            >
-            <input
-              type="number"
-              id="userTemperature"
-              value="36.5"
-              step="0.1"
-              rows="10"
-            />
-          </div>
-          <div class="button-container">
-            <button id="saveButton" class="action-button">저장</button>
-            <button id="editButton" class="action-button" style="display: none">
-              수정
-            </button>
-          </div>
+            <div>
+                <label class="temperatureLabel" for="userTemperature">체온 (°C)</label>
+                <input type="number" id="userTemperature" value="36.5" step="0.1" rows="10" />
+            </div>
+            <div class="button-container">
+                <button id="saveButton" class="action-button">저장</button>
+                <button id="editButton" class="action-button" style="display: none"> 수정 </button>
+            </div>
         </div>
-      </div>
+    </div>
     </div>
 
     <div class="myLocation-container">
-      <button id="myLocationButton" class="myLocationButton">
+    <button id="myLocationButton" class="myLocationButton">
         <img src="/img/myLocation.png" />
-      </button>
+    </button>
     </div>
 
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e3b280d2b743d5969774693f4f482db7"
-    ></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e3b280d2b743d5969774693f4f482db7"></script>
     <script src="/js/map.js"></script>
     <script src="/js/geolocation.js"></script>
     <script src="/js/modal.js"></script>
     <script src="/js/search.js"></script>
     <script src="/js/toggle.js"></script>
-  </body>
+</body>
 </html>
