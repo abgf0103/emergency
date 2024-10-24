@@ -1,10 +1,10 @@
 const searchContainer = document.querySelector(".search-container");
 
 let currentInfoWindow = null;
-let showAvailableOnly = false; // Track the toggle state
+let showAvailableOnly = false; 
 
 document.getElementById("mode-toggle").addEventListener("change", (e) => {
-    showAvailableOnly = e.target.checked; // Update the state based on the toggle
+    showAvailableOnly = e.target.checked; 
     const searchTerm = document.getElementById("searchInput").value.trim();
     if (searchTerm) {
         performSearch(); 
