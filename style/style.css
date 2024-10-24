@@ -45,9 +45,14 @@ body {
 
 
 @keyframes pulse{
+    0%{
+        opacity: 1;
+        width: 1em;
+        height: 1em;
+        background-color: #ff0000a2;
+    }
     100%{
         opacity: 0;
-        transform: translate(-50%, -50%);
         width: 400%;
         height: 400%;
     }
