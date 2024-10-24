@@ -40,7 +40,7 @@ body {
     top: -45px;
     left: -7px;
     border-radius: 50%;
-    animation: pulse 1.5s ease-in-out infinite; 
+    animation: pulse 1.5s ease-out infinite; 
 }
 
 

@@ -83,14 +83,14 @@ let hospitalData = [];
 var markers = [];
 
 let currentOverlay = null; // 전역 변수로 오버레이 인스턴스를 저장
-console.log(3 / 5);
 // 마커와 커스텀 오버레이를 추가하는 함수 async
 function addMarkerWithOverlay(data, name, tel, usableBed, totalBed, updateTime) {
     const markerPosition = new kakao.maps.LatLng(data[0].lat, data[0].lon);
+    const almostFull = usableBed / totalBed > 0.3;
     const marker = new kakao.maps.Marker({
         map: map,
         position: markerPosition,
-        image: usableBed > 0 ? (usableBed / totalBed > 0.3 ? greenMarkerImage : yellowMarkerImage) : redMarkerImage,
+        image: usableBed > 0 ? (almostFull ? greenMarkerImage : yellowMarkerImage) : redMarkerImage,
     });
     markers.push({
         marker,
@@ -103,8 +103,8 @@ function addMarkerWithOverlay(data, name, tel, usableBed, totalBed, updateTime) 
     });
 
     // 병상 가용 여부에 따라 클래스 설정
-    let overlayClass = usableBed > 0 ? (usableBed / totalBed > 0.3 ? "greenOverlay" : "yellowOverlay") : "redOverlay";
-    let bedClass = usableBed > 0 ? (usableBed / totalBed > 0.3 ? "greenBed" : "yellowBed") : "redBed";
+    let overlayClass = usableBed > 0 ? (almostFull ? "greenOverlay" : "yellowOverlay") : "redOverlay";
+    let bedClass = usableBed > 0 ? (almostFull ? "greenBed" : "yellowBed") : "redBed";
 
     // 커스텀 오버레이에 표시할 내용
     var content = `
