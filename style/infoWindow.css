@@ -76,17 +76,33 @@
 
 /* 병상 가용 여부에 따른 색상 */
 .greenOverlay {
-    border: 5px solid rgb(38, 236, 38);
+    border: 5px solid var(--marker-color-green);
 }
 
 .redOverlay {
-    border: 5px solid red;
+    border: 5px solid var(--marker-color-red);
+}
+
+.yellowOverlay {
+    border: 5px solid var(--marker-color-yellow);
+}
+
+.highlightOverlay {
+    border: 5px solid var(--marker-color-highlight);
 }
 
 .greenBed {
-    color: rgb(38, 236, 38);
+    color: var(--marker-color-green);
 }
 
 .redBed {
-    color: red;
+    color: var(--marker-color-red);
+}
+
+.yellowBed {
+    color: var(--marker-color-darkYellow);
+}
+
+.highlightBed {
+    color: var(--marker-color-highlight);
 }

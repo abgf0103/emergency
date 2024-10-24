@@ -15,8 +15,16 @@ body {
     --primary-color-white: rgba(255, 255, 255, 0.8);
     --primary-color-red: #ff5555d0;
     --primary-color-green: #00ff62d0;
+    
+    --marker-color-green: rgb(38, 236, 38);
+    --marker-color-red: red;
+    --marker-color-yellow: yellow;
+    --marker-color-darkYellow: rgb(240, 240, 0);
+    --marker-color-highlight: #2d89f6;
 }
 
+
+/* 내 위치 마커 style */
 .myLocation{
     position: absolute;
     width: 1em;
@@ -45,6 +53,8 @@ body {
     }
 }
 
+
+/* 내 위치로 이동버튼 style */
 .myLocation-container {
     position: fixed; /* 고정 위치 */
     bottom: 20px;

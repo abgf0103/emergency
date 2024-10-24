@@ -18,20 +18,21 @@
     transition: 0.5s;
 }
 
-
+/* 커스텀 스크롤바 뒷배경 */
 #resultList::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
 }
 
+/* 커스텀 스크롤바 */
 #resultList::-webkit-scrollbar
 {
 	width: 12px;
     border-radius: 10px;
 	background-color: #ccc;
 }
-
+/* 커스텀 스크롤바 손잡이 */
 #resultList::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
@@ -112,11 +113,3 @@ li:hover {
     color: var(--primary-color-black);
     transition: 0.5s ease-in-out;
 }
-
-
-
-
-
-
-
-  

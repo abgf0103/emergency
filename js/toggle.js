@@ -2,6 +2,7 @@ const toggle = document.getElementById("mode-toggle");
 const body = document.body;
 const hidden = document.getElementById("hidden");
 
+// toggle 버튼의 change를 감지
 toggle.addEventListener("change", function () {
     if (this.checked) {
         body.classList.add("block-mode");
@@ -12,7 +13,6 @@ toggle.addEventListener("change", function () {
     }
 });
 
-// check for saved user preference, if any, on load of the website
 document.addEventListener("DOMContentLoaded", () => {
     body.classList.remove("block-mode");
     localStorage.setItem("blockMode", "disabled");
