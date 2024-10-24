@@ -1,13 +1,13 @@
 const searchContainer = document.querySelector(".search-container");
 
 let currentInfoWindow = null;
-let showAvailableOnly = false; 
+let showAvailableOnly = false;
 
 document.getElementById("mode-toggle").addEventListener("change", (e) => {
-    showAvailableOnly = e.target.checked; 
+    showAvailableOnly = e.target.checked;
     const searchTerm = document.getElementById("searchInput").value.trim();
     if (searchTerm) {
-        performSearch(); 
+        performSearch();
     }
 });
 
@@ -31,7 +31,7 @@ function performSearch() {
             if (markerData) {
                 map.setCenter(markerData.position);
                 closeInfoWindow(); // 현재 인포윈도우 닫기
-	// 커스텀 오버레이 생성
+                // 커스텀 오버레이 생성
                 const content = `
           <div class="infoWindow ${markerData.usableBed > 0 ? "greenOverlay" : "redOverlay"}">
             <div class="box">
@@ -58,6 +58,26 @@ function performSearch() {
                 currentInfoWindow = customOverlay;
             }
         });
+
+        //모바일 상태 확인 후 모바일 상태면 검색결과를 누른 순간 hidden 버튼 누른 효과
+        if (window.innerWidth <= 479) {
+            const hiddenBtn = document.querySelector(".hidden");
+            const icon = hiddenBtn.querySelector("i"); // 아이콘 요소 선택
+            hiddenBtn.classList.add("hiddenBtn");
+            li.addEventListener("click", function () {
+                if (isSearchVisible) {
+                    searchHeight = searchContainer.clientHeight;
+                    console.log(searchHeight);
+                    // 검색창을 화면 밖으로 위로 올려서 숨기기
+                    searchContainer.style.top = `-${searchHeight}px`;
+                    // 위로 숨김
+                    icon.classList.remove("fa-caret-up");
+                    // 아이콘 변경
+                    icon.classList.add("fa-caret-down");
+                    isSearchVisible = false;
+                }
+            });
+        }
 
         li.addEventListener("mouseout", () => {
             closeInfoWindow();
@@ -87,39 +107,39 @@ document.getElementById("searchInput").addEventListener("keydown", (event) => {
 });
 
 /* hidden button */
+
+// mediaQuery.matches => 현재 윈도우 mobile크기면 ture, 아니면 false
+const mediaQuery = window.matchMedia("(max-width: 479px)");
+let isSearchVisible = true;
 document.addEventListener("DOMContentLoaded", function () {
-// .hiddenBtn 클릭 시 search-container 위치를 위로 이동해 숨김
-    const btnSearch = document.querySelector(".hidden");
-    const icon = btnSearch.querySelector("i"); // 아이콘 요소 선택
+    // .hiddenBtn 클릭 시 search-container 위치를 위로 이동해 숨김
+    const hiddenBtn = document.querySelector(".hidden");
+    const icon = hiddenBtn.querySelector("i"); // 아이콘 요소 선택
     const toggleContainer = document.querySelector(".toggle-container");
 
-    let isSearchVisible = true;
-
-    btnSearch.addEventListener("click", function (event) {
-        event.preventDefault(); // 버튼 기본 동작 방지
-// 검색창의 높이 구하기
+    hiddenBtn.addEventListener("click", function (event) {
+        // 검색창의 높이 구하기
         const searchHeight = searchContainer.clientHeight;
-// mediaQuery.matches => 현재 윈도우 mobile크기면 ture, 아니면 false
-        const mediaQuery = window.matchMedia("(max-width: 479px)");
+
+        event.preventDefault(); // 버튼 기본 동작 방지
 
         if (isSearchVisible) {
-// 검색창을 화면 밖으로 위로 올려서 숨기기
+            // 검색창을 화면 밖으로 위로 올려서 숨기기
             searchContainer.style.top = `-${searchHeight}px`;
-// 위로 숨김
+            // 위로 숨김
             icon.classList.remove("fa-caret-up");
-// 아이콘 변경
+            // 아이콘 변경
             icon.classList.add("fa-caret-down");
-// 모바일 크기일때 실행
             toggleContainer.style.left = mediaQuery.matches ? "0" : "20px";
         } else {
-// 검색창을 원래 위치로 내려서 보이기
+            // 검색창을 원래 위치로 내려서 보이기
             searchContainer.style.top = ""; // 다시 보임
             icon.classList.remove("fa-caret-down"); // 아이콘 변경
             icon.classList.add("fa-caret-up");
             toggleContainer.style.left = "";
             const searchTerm = document.getElementById("searchInput").value.trim();
             if (searchTerm) {
-                performSearch(); 
+                performSearch();
             }
         }
         isSearchVisible = !isSearchVisible;
