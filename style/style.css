@@ -13,6 +13,7 @@ body {
     --primary-light-color : #5baaff; /*연한 색상*/
     --primary-hover-color: #0056b3; /* hover 색상 */
     --primary-color-white: rgba(255, 255, 255, 0.8);
+    --primary-color-gray: #888888;
     --primary-color-red: #ff5555d0;
     --primary-color-green: #00ff62d0;
     
