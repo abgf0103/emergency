@@ -11,6 +11,7 @@
     background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
 }
 
+
 .modal-content {
     background-color: var(--primary-color-white);
     display: none;
@@ -28,25 +29,54 @@
     margin: 15% auto;
     padding: 20px;
     border: 1px solid var(--primary-color-gray);
-    width: 400px; /* 모달의 너비 조정 */
+    width: 320px; /* 모달의 너비 조정 */
     border-radius: 5px;
     position: relative; /* 위치 조정을 위해 상대 위치 설정 */
 }
 
+.modal-member p {
+    font-size: 11px;
+    margin-top: 10px;
+}
+
+.memberID{
+    width: 200px;
+}
+
+.memberInfoChkBtn{
+    padding: 3px 15px;
+    background-color: var(--primary-color); /* 파란색 배경 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    right: 20px;
+    position: absolute;
+}
+
+.memberInfoChkBtn:hover {
+    background-color: var(--primary-hover-color);
+}
+
 @media (max-width: 479px) {
-.modal-content {
-    width: 300px;
-}
+    .modal-content {
+        width: 300px;
+    }
 
-.search-container{
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-}
+    .search-container{
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+    }
 
-#searchInput {
-    width: 75%;
-}
+    #searchInput {
+        width: 75%;
+    }
+
+    #temperature{
+        width: 110px;
+    }
 }
 
 .infoLabel {
@@ -132,22 +162,17 @@ textarea {
     background-color: var(--primary-hover-color);
 }
 
-.temperature {
-    display: flex;
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: space-between; /* 가로로 공간 분배 */
+.temp-content{
+    padding: 10px;
 }
 
-.temperature div {
-    display: flex;
-    flex-direction: column; /* 세로 방향으로 정렬 */
-    align-items: center; /* 가로 중앙 정렬 */
-}
-
-.temperature input {
-    margin-top: 5px;
+#temperature{
+    margin-left: 10px;
 }
 
 .button-container {
     display: flex; /* 버튼들이 가로로 나란히 정렬 */
+    position: absolute;
+    right: 30px;
+    bottom: 20px;
 }

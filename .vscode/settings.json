@@ -1,3 +1,16 @@
 {
+<<<<<<< Updated upstream
   "liveServer.settings.port": 5501
 }
+=======
+    "liveServer.settings.port": 5500,
+    "liveServer.settings.root": "/",
+    "liveServer.settings.CustomBrowser": "chrome",
+    "liveServer.settings.https": {
+      "enable": true,
+      "cert": "C:/Users/user1/Desktop/https/localhost.pem",
+      "key": "C:/Users/user1/Desktop/https/localhost.key",
+      "passphrase": "1111"
+    }
+  }
+>>>>>>> Stashed changes

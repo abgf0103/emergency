@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.emergency.memberMapper.MemberMapper">
+
+    <select id="findMemberByID"
+            parameterType="String"
+            resultType="com.example.emergency.vo.MemberVO">
+        SELECT MEMBER_ID
+             , CONTENT
+             , TEMPERATURE
+        FROM MEMBER_INFO
+        WHERE MEMBER_ID = #{memberID}
+    </select>
+
+    <select id="findMemberList">
+        SELECT * FROM MEMBER_INFO ORDER BY MEMBER_ID
+    </select>
+
+    <update id="updateMemberInfo"
+            parameterType="com.example.emergency.vo.MemberVO">
+        UPDATE MEMBER_INFO
+        SET CONTENT     = #{content}
+          , TEMPERATURE = #{temperature}
+        WHERE MEMBER_ID = #{memberID}
+    </update>
+
+    <insert id="insertMemberInfo"
+            parameterType="com.example.emergency.vo.MemberVO">
+        INSERT INTO MEMBER_INFO (MEMBER_ID, TEMPERATURE)
+        VALUES(#{memberID}, 36.5)
+    </insert>
+
+    <delete id="deleteMemberInfo"
+            parameterType="String">
+        DELETE MEMBER_INFO WHERE MEMBER_ID = #{memberID}
+    </delete>
+</mapper>
